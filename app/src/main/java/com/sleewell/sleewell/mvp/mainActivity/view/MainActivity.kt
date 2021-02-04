@@ -12,6 +12,7 @@ import com.sleewell.sleewell.mvp.mainActivity.presenter.MainPresenter
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
+import android.widget.Toast
 import com.sleewell.sleewell.modules.permissions.PermissionManager
 import com.spotify.sdk.android.authentication.AuthenticationClient
 import com.spotify.sdk.android.authentication.AuthenticationResponse
@@ -79,11 +80,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 AuthenticationResponse.Type.TOKEN -> {
                     accessToken = response.accessToken
                     getAccessToken = true
+                    Toast.makeText(this, "Connected to Spotify", Toast.LENGTH_LONG).show()
                 }
                 AuthenticationResponse.Type.ERROR -> {
                     getAccessToken = false
-                }
-                else -> {
+                    Toast.makeText(this, response.error, Toast.LENGTH_LONG).show()
+                    this.callingActivity?.className
+                } else -> {
                 }
             }
         }

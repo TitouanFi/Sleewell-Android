@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import com.sleewell.sleewell.R
 import com.sleewell.sleewell.Spotify.MainContract
@@ -22,6 +23,7 @@ import com.spotify.sdk.android.authentication.AuthenticationRequest
 import com.spotify.sdk.android.authentication.AuthenticationResponse
 import com.spotify.sdk.android.authentication.LoginActivity
 import com.spotify.sdk.android.authentication.LoginActivity.REQUEST_CODE
+import com.spotify.sdk.android.authentication.LoginActivity.getAuthIntent
 
 
 class SpotifyFragment: Fragment(), MainContract.View {
@@ -48,6 +50,9 @@ class SpotifyFragment: Fragment(), MainContract.View {
         presenter.onViewCreated()
 
         InitFragmentWidget()
+        if (!MainActivity.getAccessToken) {
+            authenticateSpotify()
+        }
         return root
     }
 
@@ -61,9 +66,7 @@ class SpotifyFragment: Fragment(), MainContract.View {
         rearchButtonSpotify = root.findViewById(R.id.searchSpotifyButton)
         listView = root.findViewById(R.id.playlistSpotifyListView)
 
-        rearchButtonSpotify.setOnClickListener{
-            presenter.rearchPlaylist(editTextSpotify.text)
-        }
+        rearchButtonSpotify.setOnClickListener{ presenter.rearchPlaylist(editTextSpotify.text) }
 
         listView.onItemClickListener = AdapterView.OnItemClickListener{ _, _, i, _ ->
             val resultIntent = Intent()
@@ -76,7 +79,6 @@ class SpotifyFragment: Fragment(), MainContract.View {
             resultIntent.putExtra("uriMusicSelected", musicSelected.getUri())
             fragmentManager?.popBackStack()
         }
-        authenticateSpotify()
     }
 
     override fun getAccessToken() : String {

@@ -14,7 +14,7 @@ interface MainContract {
              *
              * @author gabin warnier de wailly
              */
-            fun onFinished(weather : ApiResultSpotify)
+            fun onFinished()
             /**
              * This method is call when the request fail
              *
@@ -29,10 +29,9 @@ interface MainContract {
          *
          * @param response response of spotify request
          *
-         * @return SpotifyPlaylistAdapter
          * @author gabin warnier de wailly
          */
-        fun updateListPlaylistSpotify(response :ApiResultSpotify) : SpotifyPlaylistAdapter
+        fun updateListPlaylistSpotify(response :ApiResultSpotify)
         /**
          * This method will return the music information
          *
@@ -42,6 +41,15 @@ interface MainContract {
          * @author gabin warnier de wailly
          */
         fun getMusicSelected(index : Int) : SpotifyPlaylist
+
+        /**
+         * This method is a getter for adapter of model
+         *
+         * @return this adapter of Spotify playlist
+         * @author gabin warnier de wailly
+         */
+        fun getAdapterPlaylistSpotify() : SpotifyPlaylistAdapter
+
         /**
          * This method will send a request for the search of playlist on spotify
          *

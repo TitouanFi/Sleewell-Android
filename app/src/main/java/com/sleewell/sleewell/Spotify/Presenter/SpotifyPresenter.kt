@@ -46,8 +46,8 @@ class SpotifyPresenter(view: SpotifyFragment, context: Context) : MainContract.P
         return model.getMusicSelected(index)
     }
 
-    override fun onFinished(playlist: ApiResultSpotify) {
-        val adapter = model.updateListPlaylistSpotify(playlist)
+    override fun onFinished() {
+        val adapter = model.getAdapterPlaylistSpotify()
         view?.displayPlaylistSpotify(adapter)
     }
 

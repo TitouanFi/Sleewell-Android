@@ -33,7 +33,8 @@ class SpotifyModel(context: Context) : MainContract.Model {
                     onFinishedListener.onFailure(Throwable("Body null error : " + response.code()))
                 } else {
                     Log.e(TAG, "Success")
-                    onFinishedListener.onFinished(responseRes)
+                    updateListPlaylistSpotify(responseRes)
+                    onFinishedListener.onFinished()
                 }
             }
 
@@ -45,7 +46,7 @@ class SpotifyModel(context: Context) : MainContract.Model {
         })
     }
 
-    override fun updateListPlaylistSpotify(response :ApiResultSpotify) : SpotifyPlaylistAdapter {
+    override fun updateListPlaylistSpotify(response :ApiResultSpotify) {
         aList.clear()
         for (i in 0 until response.playlists!!.items!!.size) {
             val name = response.playlists!!.items!!.get(i).name
@@ -57,6 +58,9 @@ class SpotifyModel(context: Context) : MainContract.Model {
             aList.add(SpotifyPlaylist("No playlist found","", ""))
         }
         adapter = SpotifyPlaylistAdapter(context, aList)
+    }
+
+    override fun getAdapterPlaylistSpotify() : SpotifyPlaylistAdapter {
         return adapter
     }
 
