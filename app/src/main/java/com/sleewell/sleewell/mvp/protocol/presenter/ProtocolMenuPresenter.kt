@@ -129,4 +129,12 @@ class ProtocolMenuPresenter(private var view: ProtocolMenuContract.View, private
     override fun stopAnalyse() {
         model.onRecordAudio(false)
     }
+
+    override fun connectionSpotify() {
+        model.connectionSpotify()
+    }
+
+    override fun stopMusicSpotify() {
+        model.stopPlaylistSpotify()
+    }
 }

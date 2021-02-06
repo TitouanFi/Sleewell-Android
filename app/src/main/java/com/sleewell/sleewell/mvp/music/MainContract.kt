@@ -26,29 +26,6 @@ interface MainContract {
          *
          * @author gabin warnier de wailly
          */
-        fun connectionSpotify()
-        /**
-         * This method try to disconnect to the application Spotify
-         *
-         * @/**
-         * This method try to play a playlist on Spotify
-         *
-         * @param idMusic it's the uri, it's similar to the id of a playlist/music/album/...
-         *
-         * @author gabin warnier de wailly
-        */author gabin warnier de wailly
-         */
-        fun disconnectionSpotify()
-        /**
-         * This method try to play a playlist on Spotify
-         *
-         * @param idMusic it's the uri, it's similar to the id of a playlist/music/album/...
-         *
-         * @return Boolean
-         *
-         * @author gabin warnier de wailly
-         */
-        fun playPlaylistSpotify(idMusic: String) : Boolean
     }
 
     interface Presenter : BasePresenter {

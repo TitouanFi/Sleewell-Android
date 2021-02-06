@@ -15,6 +15,7 @@ import android.os.IBinder
 import android.view.MotionEvent
 import android.view.Window
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.sleewell.sleewell.R
 import com.sleewell.sleewell.modules.audio.audioRecord.IRecorderListener
@@ -24,6 +25,9 @@ import com.sleewell.sleewell.modules.audio.service.AnalyseServiceBroadcast
 import com.sleewell.sleewell.modules.audio.service.AnalyseServiceTracker
 import com.sleewell.sleewell.mvp.protocol.ProtocolContract
 import com.sleewell.sleewell.mvp.protocol.ProtocolMenuContract
+import com.spotify.android.appremote.api.ConnectionParams
+import com.spotify.android.appremote.api.Connector
+import com.spotify.android.appremote.api.SpotifyAppRemote
 
 /**
  * this class is the model of the halo
@@ -40,6 +44,12 @@ class ProtocolModel(
 
     //Music
     private var mediaPlayer: MediaPlayer? = null
+
+    //Spotify
+    private val clientId = "" // /!\ need to hide
+    private val redirectUri = "http://com.sleewell.sleewell/callback"
+
+    private var spotifyAppRemote: SpotifyAppRemote? = null
 
     override fun getSizeOfCircle(): Int {
         return size
@@ -150,6 +160,8 @@ class ProtocolModel(
      *
      */
     override fun onDestroy() {
+        stopMusique()
+        stopPlaylistSpotify()
     }
 
     override fun stopMusique() {
@@ -185,6 +197,68 @@ class ProtocolModel(
         with(Intent(context, AnalyseService::class.java)) {
             action = AnalyseService.STOP
             context.startService(this)
+        }
+    }
+
+    /**
+     * This method try to connect to the application Spotify
+     *
+     * @author gabin warnier de wailly
+     */
+    override fun connectionSpotify() {
+        val connectionParams = ConnectionParams.Builder(clientId)
+            .setRedirectUri(redirectUri)
+            .showAuthView(true)
+            .build()
+        SpotifyAppRemote.connect(context, connectionParams, object : Connector.ConnectionListener {
+
+            override fun onConnected(appRemote: SpotifyAppRemote) {
+                spotifyAppRemote = appRemote
+                connected()
+            }
+
+            override fun onFailure(throwable: Throwable) {
+                Toast.makeText(context, "Fail " + throwable.message, Toast.LENGTH_LONG).show()
+            }
+        })
+        Toast.makeText(context, "Connection to Spotify...", Toast.LENGTH_SHORT).show()
+    }
+
+    /**
+     * this method will manage after the connection on spotify
+     *
+     */
+    private fun connected() {
+        Toast.makeText(context, "Connected", Toast.LENGTH_LONG).show()
+
+        playPlaylistSpotify("spotify:track:3Gy5q1K4nTwDVVtyQWYv3t")
+    }
+
+    /**
+     * This method try to play a playlist on Spotify
+     *
+     * @param idMusic it's the uri, it's similar to the id of a playlist/music/album/...
+     *
+     * @return Boolean
+     *
+     * @author gabin warnier de wailly
+     */
+    override fun playPlaylistSpotify(idMusic: String) : Boolean {
+        stopMusique()
+        spotifyAppRemote?.let {
+            if (spotifyAppRemote?.isConnected!!) {
+                spotifyAppRemote?.playerApi?.play(idMusic)
+                return true
+            }
+        }
+        return false
+    }
+
+    override fun stopPlaylistSpotify() {
+        spotifyAppRemote?.let {
+            if (spotifyAppRemote?.isConnected!!) {
+                spotifyAppRemote?.playerApi?.pause()
+            }
         }
     }
 }

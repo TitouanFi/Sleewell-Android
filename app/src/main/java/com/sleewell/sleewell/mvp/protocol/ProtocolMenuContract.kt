@@ -173,6 +173,18 @@ interface ProtocolMenuContract {
          * @author Titouan FIANCETTE
          */
         fun disableShowWhenLock()
+
+        /**
+         * Connection to Spotify and play music directly
+         *
+         */
+        fun connectionSpotify()
+
+        /**
+         * Stop music played in Spotify
+         *
+         */
+        fun stopMusicSpotify()
     }
 
     interface View : BaseView<Presenter> {

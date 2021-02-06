@@ -39,6 +39,8 @@ class SpotifyPresenter(view: SpotifyFragment, context: Context) : MainContract.P
             val accessToken = view?.getAccessToken()
             if (accessToken!!.isNotEmpty())
                 model.getPlaylistSpotifySearch(this, view?.getAccessToken(), namePlaylist.toString())
+            else
+                view!!.displayToast("Error : not login to Spotify")
         }
     }
 

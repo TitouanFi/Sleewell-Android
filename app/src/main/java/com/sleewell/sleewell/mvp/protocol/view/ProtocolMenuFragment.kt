@@ -64,6 +64,7 @@ class ProtocolMenuFragment : Fragment(), ProtocolMenuContract.View, UserInteract
         setPresenter(ProtocolMenuPresenter(this, this.activity as AppCompatActivity))
         onUserInteraction()
 
+        presenter.connectionSpotify()
         return root
     }
 

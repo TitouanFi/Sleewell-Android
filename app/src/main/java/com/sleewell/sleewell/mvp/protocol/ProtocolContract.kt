@@ -107,6 +107,31 @@ interface ProtocolContract {
          *
          */
         fun onDestroy()
+
+        /**
+         * This method try to connect to the application Spotify
+         *
+         * @author gabin warnier de wailly
+         */
+        fun connectionSpotify()
+
+        /**
+         * This method try to play a playlist on Spotify
+         *
+         * @param idMusic it's the uri, it's similar to the id of a playlist/music/album/...
+         *
+         * @return Boolean
+         *
+         * @author gabin warnier de wailly
+         */
+        fun playPlaylistSpotify(idMusic: String) : Boolean
+
+        /**
+         * This method set the playlist to pause
+         *
+         * @author gabin warnier de wailly
+         */
+        fun stopPlaylistSpotify()
     }
 
     interface Presenter : BasePresenter {
