@@ -55,39 +55,4 @@ class MusicPresenter(view: MainContract.View, context: Context) : MainContract.P
         model.stopMusique()
         view = null
     }
-
-    /**
-     * This method call a model method for the connection to spotify
-     *
-     * @author gabin warnier de wailly
-     */
-    override fun connectionSpotify() {
-        model.connectionSpotify()
-        view?.displayToast("Connection...")
-    }
-
-    /**
-     * This method call a model method for the disconnection to spotify
-     *
-     * @author gabin warnier de wailly
-     */
-    override fun disconnectionSpotify() {
-        model.disconnectionSpotify()
-        view?.displayToast("Disconnection")
-    }
-
-    /**
-     * This method call a model method for play a music
-     *
-     * @param idMusic it's the number of the music from the array list
-     *
-     * @author gabin warnier de wailly
-     */
-    override fun playPlaylistSpotify(idMusic: String) {
-         if (model.playPlaylistSpotify(idMusic)) {
-            view?.displayToast("Play")
-        } else {
-            view?.displayToast("Error Spotify must be connected")
-        }
-    }
 }

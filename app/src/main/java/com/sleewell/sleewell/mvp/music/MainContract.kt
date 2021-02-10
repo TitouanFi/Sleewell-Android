@@ -56,26 +56,6 @@ interface MainContract {
          * @author gabin warnier de wailly
          */
         fun stopMusique()
-        /**
-         * This method call a model method for the connection to spotify
-         *
-         * @author gabin warnier de wailly
-         */
-        fun connectionSpotify()
-        /**
-         * This method call a model method for the disconnection to spotify
-         *
-         * @author gabin warnier de wailly
-         */
-        fun disconnectionSpotify()
-        /**
-         * This method call a model method for play a music
-         *
-         * @param idMusic it's the number of the music from the array list
-         *
-         * @author gabin warnier de wailly
-         */
-        fun playPlaylistSpotify(idMusic: String)
     }
 
     interface View : BaseView<Presenter> {
